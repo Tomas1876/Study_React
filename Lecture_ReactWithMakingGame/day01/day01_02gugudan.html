@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+   <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+
+   <!--바벨-->
+   <script crossorigin src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+</head>
+<body>
+   <div id="root"></div>
+
+   <script type="text/babel">
+        class GuGuDan extends React.Component{
+        constructor(props){
+            super(props);
+
+            //상태(state)는 변화하는 것
+            //이 객체 안에 바뀔 것들을 속성으로 추가해준다
+            this.state={
+
+                //Math.ceil 소수점 첫번째자리 올림해주는 함수
+                first: Math.ceil(Math.random()*9),
+                second : Math.ceil(Math.random()*9),
+                value: "",
+                result:"",
+            };
+        }
+
+        render(){
+
+            //html 태그 사이에 {}를 사용하면 그 안에 javascript를 사용할 수 있다
+            return (
+                <div>
+                    <div>{this.state.first} 곱하기 {this.state.second}는?</div>
+                    <form>
+                        <input type="number" value={this.state.value} />
+                        <button>입력!</button>
+                    </form>
+                    <div>{this.state.result}</div>
+                </div>
+                );
+        }
+    }
+   </script>
+   <script type="text/babel">
+        ReactDOM.render(<GuGuDan />, document.querySelector('#root'));
+   </script>
+</body>
+</html>
