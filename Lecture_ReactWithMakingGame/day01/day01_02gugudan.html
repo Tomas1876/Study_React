@@ -27,19 +27,59 @@
             };
         }
 
+
+         //jsx랑 javascript는 가급적 섞어쓰지 않는 것이 좋기 때문에
+        // form에 onSubmit 이벤트가 일어났을 때 실행될 내용을 클래스의 함수로 뺀 것
+        //함수는 javascript 로직으로 이루어져 있고
+        //이 함수가 호출되는 부분은 jsx다 이렇게 분리하는 것이 깔끔하다
+        onSubmit = (e) => {
+                        e.preventDefault();
+                        if(parseInt(this.state.value) === this.state.first * this.state.second){
+
+                            this.setState({
+                                result:"정답",
+                                first: Math.ceil(Math.random()*9),
+                                second : Math.ceil(Math.random()*9),
+                                value:""
+                            });
+
+                        } else{
+                            this.setState({
+                                result:"땡",
+                                value:""
+                            });
+                        }
+                    };
+
+        onChange =(e)=> {
+            this.setState({value:e.target.value});
+        };
+
         render(){
 
             //html 태그 사이에 {}를 사용하면 그 안에 javascript를 사용할 수 있다
+            //form 태그 안에서 <input type="number" value={this.state.value} /> 라고만 하면 입력이 불가하다
+            //생각해보면, 커서를 놓고 입력하면 그 입력값도 계속 변화하는 값이다 즉 state라고 볼 수 있다(단 자동 말고 직접 바꾸는 것)
+            //state를 바꾸려면 setState를 사용한다
+            //아래에서 this란 해당 class의 this다
             return (
                 <div>
                     <div>{this.state.first} 곱하기 {this.state.second}는?</div>
-                    <form>
-                        <input type="number" value={this.state.value} />
+
+
+                    <form onSubmit={this.onSubmit}>
+                        
+                        <input type="number" value={this.state.value} onChange={this.onChange}/>
                         <button>입력!</button>
                     </form>
                     <div>{this.state.result}</div>
+
+                    <div>
+                       <p>{this.state.first} X {this.state.second} = {this.state.value}</p>
+                    </div>
                 </div>
                 );
+
         }
     }
    </script>
