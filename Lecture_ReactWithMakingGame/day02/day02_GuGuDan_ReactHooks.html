@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>구구단 REact Hooks</title>
+
+    <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+ 
+    <!--바벨-->
+    <script crossorigin src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+</head>
+<body>
+    <div id="root"></div> <!--결과가 출력될 div-->
+
+    <script type="text/babel">
+
+        /*
+        //이건 함수 컴포넌트(내부에 setState를 사용할 필요가 없는 컴포넌트는 이렇게 함수형으로 만들어도 된다 클래스보다 간단)
+        const GuGuDan = () =>{
+            return <div> Hello, Hooks </div>
+        }
+        */
+
+        const GuGuDan = () =>{
+
+            //이제 this.state로 객체 형태를 사용할 수는 없다 클래스가 아니기 때문에
+            //state를 객체로 묶지 않고 하나씩 쪼갠다고 생각한다
+            //우항에 초기값 설정
+            const [first, setFirst] = React.useState(Math.ceil(Math.random()*9));
+            const [second, setSecond] = React.useState(Math.ceil(Math.random()*9));
+            const [value, setValue] = React.useState('');
+            const [result, setResult] = React.useState('');
+            //useState는 컴포넌트의 상태를 관리할 수 있게 하는 함수다(Hooks)
+            //[] 안에서 두 번째 값인 set~~는 첫번째 값(state)에 대한 setState라고 보면 된다
+            //오로지 짝을 이루는 그 state만 관리하는 setState다
+            //state를 설정하는 건 반드시 이 컴포넌트 안에 있어야 한다
+
+            const inputRef = React.useRef(null);
+
+            const onChangeInput = (e) => {
+                setValue(e.target.value);
+            };
+
+            const onSubmitForm = (e) => {
+                e.preventDefault();
+
+                if(parseInt(value) === first * second){
+                    setResult(value + '는 정답입니다');
+                    setFirst(Math.ceil(Math.random()*9));
+                    setSecond(Math.ceil(Math.random()*9));
+                    setValue('');
+                    inputRef.current.focus();
+                } else{
+                    setResult(value + '는 정답이 아닙니다');
+                    setValue('');
+                    inputRef.current.focus();
+                }
+
+            }
+                //React에서는 html 태그 안에 id는 사용 가능하지만 class는 쓸 수 없다
+                //React가 class를 사용하기 때문에 javascript 엔진이 구별하기 어렵기 때문
+                //그래서 태그에 class를 지정하고 싶다면 calssName이라고 지정해준다
+                //label에 사용하던 for도 htmlfor로 바꿔줘야 한다
+                //이렇게 하면 구별 가능
+            return (
+                <React.Fragment>
+                    
+                    <div>{first} 곱하기 {second}는?</div>
+                    <form onSubmit={onSubmitForm}>
+                        <input ref={inputRef} onChange={onChangeInput} value={value} />
+                        <button>입력!</button>
+                    </form>
+                    <div id="result">{result}</div>
+                </React.Fragment>
+            );
+
+        }
+
+        //클래스와 달리 Hooks는 state가 바뀌면 함수 전체가 통으로 다시 실행된다
+        //(클래스는 render함수만 다시 실행됐음)
+        //그래서 경우에 따라 Hooks가 좀더 느릴 수 있다는 점 주의
+    </script>
+
+    <script type="text/babel">
+        ReactDOM.render(<GuGuDan />, document.querySelector('#root'));
+    </script>
+</body>
+</html>
