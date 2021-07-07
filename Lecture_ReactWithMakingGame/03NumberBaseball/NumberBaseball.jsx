@@ -1,4 +1,4 @@
-import React, {useState} from 'react'; 
+import React, {useState, memo} from 'react'; 
 import Try from './Try';
 function getNumbers(){ //숫자 네 개를 랜덤하게 뽑는 함수(중복 X)
     const candidates = [1,2,3,4,5,6,7,8,9];
@@ -12,7 +12,7 @@ function getNumbers(){ //숫자 네 개를 랜덤하게 뽑는 함수(중복 X)
     //class에 속하지 않으니까
 }
 
-const NumberBaseball = () => {
+const NumberBaseball = memo(() => {
     const [result, setResult] = useState('');
     const [value, setValue] = useState('');
     const [answer, setAnswer] = useState(getNumbers());
@@ -71,7 +71,7 @@ const NumberBaseball = () => {
     }
 
     const onChangeInput = (e) => {
-        console.log(this.state.answer);
+        console.log(answer);
         setValue(e.target.value);
     }
 
@@ -89,11 +89,11 @@ const NumberBaseball = () => {
                        return(
                         <Try key={(i+1)+'차 시도:'} tryInfo={v} index={i}/> /*props로 부모자식관계가 형성된다 부모인 NumberBaseball이 자식 Try에게 props를 물려줌 */
                        );
-                   })};
+                   })}
                </ul>
             </>
     );
-}
+});
 
 //export const hello = 'hello'; // default를 사용하지 않고 export했다면 import { hello } 
 
