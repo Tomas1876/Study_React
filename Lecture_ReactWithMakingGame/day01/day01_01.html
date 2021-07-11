@@ -8,20 +8,23 @@
    <script crossorigin src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
 </head>
 <body>
-   <div id="root"></div> <!-- <div id="root"><button>Like</button></div> -->
+   <div id="root"></div> <!-- <div id="root"><button>Like</button></div> 라는 결과가 나올 것 -->
 
    <!--babel은 javascript 안에서 html 태그를 쓸 수 있게 해주는 것-->
    <script type="text/babel">
-       //이 e는 태그를 만들어주는 함수
-      const e = React.createElement;
+      //html 태그를 만들 수 있게 한다
+      //const e = React.createElement;
       
-      //react로 likebutton이라는 컴포넌트를 만들겠다는 뜻(vue와 헷갈리지 말것!)
+      // react로 likebutton이라는 컴포넌트를 만들겠다는 뜻
+      // class 하나가 컴포넌트 하나라고 볼 수 있다
       class LikeButton extends React.Component {
          constructor(props) {
             super(props);
+
+            //state는 바뀔 여지가 있는 것을 말한다
             this.state={
-                liked : false,
-            }
+                liked : false
+            };
          }
          
          render() {
@@ -30,6 +33,7 @@
              return <button type="submit" onClick={() => { this.setState({ liked : true}) }}>
                 {this.state.liked === true? 'Liked' : 'Like'}
                 </button>;
+                // 아래처럼 e를 쓰지 않고 바로 태그를 쓰면 위에서 const e를 선언할 필요가 없어진다
 
                 //e('button', 
                 //  { onClick : () => { this.setState({ liked : true}) }, type : "submit"}, 
@@ -43,6 +47,7 @@
         /*
             div처럼 소문자로 시작하는 것은 html태그
             LikeButton처럼 대문자로 시작하는 것은 컴포넌트라고 생각하면 편하다
+            ReactDOM은 화면에 렌더링을 해준다
         */
         ReactDOM.render(<div><LikeButton /><LikeButton /><LikeButton /><LikeButton /></div>, document.querySelector('#root'));
    </script>
