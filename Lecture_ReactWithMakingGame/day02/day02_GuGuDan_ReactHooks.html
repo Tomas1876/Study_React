@@ -30,6 +30,7 @@
             //이제 this.state로 객체 형태를 사용할 수는 없다 클래스가 아니기 때문에
             //state를 객체로 묶지 않고 하나씩 쪼갠다고 생각한다
             //우항에 초기값 설정
+            // 우항의 use로 시작하는 것이 바로 hooks
             const [first, setFirst] = React.useState(Math.ceil(Math.random()*9));
             const [second, setSecond] = React.useState(Math.ceil(Math.random()*9));
             const [value, setValue] = React.useState('');

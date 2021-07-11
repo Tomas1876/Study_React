@@ -54,12 +54,12 @@
                                     first: Math.ceil(Math.random()*9),
                                     second : Math.ceil(Math.random()*9),
                                     value:"",
-                                    exvalue:this.state.value
-                                };
-
-                                
+                                    exvalue:prevState.value
+                                    //아래 else처럼 this.state.value를 써도 되지만
+                                    //여기처럼 setState 안에 함수를 사용할 수도 있다
+                                    //this.state를 setState 안에 사용하게 되면 함수를 사용하는 것이 나은 편
+                                };                                
                             });
-
                             //이렇게 해줘야 입력 버튼을 누르고 난 후에도 focus가 해제되지 않는다
                             this.input.focus();
                         } else{
@@ -102,7 +102,7 @@
                         
                         <input ref={this.onRefinput} type="number" value={this.state.value} onChange={this.onChange}/>
                         <button>입력!</button>
-                    </form>
+                    </form> 
                     <div>{this.state.exvalue}{this.state.result}</div>
 
                 </React.Fragment> 
