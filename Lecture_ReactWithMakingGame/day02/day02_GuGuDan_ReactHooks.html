@@ -60,7 +60,7 @@
                     //원래 this.input을 사용해서 DOM에 접근했었는데
                     //HOOKS에서는 useRef를 이용해서 DOM에 접근하고
                     //이때 current가 필요하다
-                    
+
                 } else{
                     setResult(value + '는 정답이 아닙니다');
                     setValue('');
@@ -79,7 +79,10 @@
                     <div>{first} 곱하기 {second}는?</div>
                     <form onSubmit={onSubmitForm}>
                         <input ref={inputRef} onChange={onChangeInput} value={value} />
-                        <button>입력!</button>
+                        
+                        //아래의 className 이 바로 태그의 class, htmlFor은 label for
+                        //html과 다른 점이니 주의해야 한다
+                        <button id="button" className="" htmlFor>입력!</button>
                     </form>
                     <div id="result">{result}</div>
                 </React.Fragment>
