@@ -2,6 +2,8 @@ const path = require('path');
 //이건 노드에서 경로를 쉽게 조작할 수 있게 해주는 것
 //노드 강의에서 더 알아보기
 
+const webpack = require('webpack'); 
+
 module.exports ={
     name: 'word-relay-setting', //웹팩 설정 이름
     mode: 'development', //실서비스에서는 production
@@ -26,11 +28,21 @@ module.exports ={
             test: /\.jsx?/, //규칙을 적용할 파일들 이건 정규표현식인데 js와 jsx파일에 룰을 적용하겠다는 뜻
             loader: 'babel-loader', //적용할 룰은 바벨
             options:{
-                presets:['@babel/preset-env', '@babel/preset-react'],
-                plugins:['@babel/plugin-proposal-class-properties']
+                presets:[
+                    ['@babel/preset-env',{
+                        targets:{
+                            browsers:['> 1% in KR'], //대한민국에서 점유율 1% 이상인 브라우저만 지원하겠다는 뜻
+                        }
+                    }],
+                    '@babel/preset-react'
+                ],
+                plugins:[]
             }
         }]
     }, //entry에 있는 파일을 읽어서 moule을 적용한 후 output으로 뺀다
+    plugins:[
+        new webpack.LoaderOptionsPlugin({debug:true})
+    ],
     output:{
         path: path.join(__dirname, 'dist'), //현재 폴더 안에 들어있는 dist라는 뜻 path.join이 자동으로 현재폴더를 잡을 수 있게 해준다
         filename:'app.js'
