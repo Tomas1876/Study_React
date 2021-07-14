@@ -1,8 +1,8 @@
 const path = require('path');
+const webpack = require('webpack'); 
+const RefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 //이건 노드에서 경로를 쉽게 조작할 수 있게 해주는 것
 //노드 강의에서 더 알아보기
-
-const webpack = require('webpack'); 
 
 module.exports ={
     name: 'word-relay-setting', //웹팩 설정 이름
@@ -32,22 +32,27 @@ module.exports ={
                     ['@babel/preset-env',{
                         targets:{
                             browsers:['> 1% in KR'], //대한민국에서 점유율 1% 이상인 브라우저만 지원하겠다는 뜻
-                        }
+                        },
+                        debug:true
                     }],
                     '@babel/preset-react'
                 ],
-                plugins:[]
+                plugins:[
+                    '@babel/plugin-proposal-class-properties',
+                    'react-refresh/babel'
+                ]
             }
         }]
     }, //entry에 있는 파일을 읽어서 moule을 적용한 후 output으로 뺀다
     plugins:[
-        new webpack.LoaderOptionsPlugin({debug:true})
+        new RefreshWebpackPlugin() //이것이 플러그인을 장착한 것
     ],
     output:{
         path: path.join(__dirname, 'dist'), //현재 폴더 안에 들어있는 dist라는 뜻 path.join이 자동으로 현재폴더를 잡을 수 있게 해준다
-        filename:'app.js'
-    }
-    //이렇게 설정하면 entry의 app에 적은 값들을 합쳐서 output의 filename을 가진 파일을 만들어준다
+        filename:'app.js',
+        publicPath:'/dist/'
+    },
+    //위를 이렇게 설정하면 entry의 app에 적은 값들을 합쳐서 output의 filename을 가진 파일을 만들어준다
     //설정 후 터미널에서 webpack이라고 치면 됨 이때
     //webpack : 'webpack' 용어가 cmdlet, 함수, 스크립트 파일 또는 실행할 수 있는 프로그램 이름으로 인식되지 않습니다
     //혹은 내부 또는 외부명령, 실행할 수 있는 프로그램, 또는 배치 파일이 아닙니다
@@ -56,4 +61,10 @@ module.exports ={
     //명령어로 등록하거나, package.json에 스크립트로 적어서 사용해도 됨("dev":"webpack")
     //스크립트로 사용할 경우 작성하고 터미널에서 npm run dev라고 명령해야 함
     //혹은 npx webpack 이라고 작성해도 된다
+    
+    devServer:{ //소스코드에 변경점이 생기면 그것을 감지해서 메모리에 저장된 값을 변경하는 기능이 있다
+        publicPath:'/dist/', //가상 경로
+        hot:true,
+        port:"8070"
+    }
 };
