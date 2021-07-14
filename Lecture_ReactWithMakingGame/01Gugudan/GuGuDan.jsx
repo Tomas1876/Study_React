@@ -2,7 +2,7 @@ const React = require('react');
 
 //구조분해 할당 문법 사용(Hooks 사용시 반복되는 React.setState 더 깔끔하게 만들기)
 const {useState, useRef} = React;
-
+ 
 
 const GuGuDan = () =>{
 

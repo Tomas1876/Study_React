@@ -1,13 +1,13 @@
 //컴포넌트를 분리할 때마다 반드시 npm에서 사용하는 것을(여기서는 react) 불러와야 한다
 const React = require('react');
 //위를 간략화하면 아래와 같다
-//const {Component} = React;
+//const {Component} = React; 
 
 class WordRelay extends React.Component{
     state ={
         text:'Hello, webpack'
     };
-
+ 
     render(){
         return <h1>{this.state.text}</h1>
     }
