@@ -1,10 +1,5 @@
-const React = require('react');
-const ReactDOM = require('react-dom');
-/*  위 두 줄을 import로 표현하면 다음과 같다
-    import React from 'react';
-    import ReactDom from 'react-dom';
-*/
+import React from 'react';
+import ReactDom from 'react-dom';
+import NumberBaseball from './NumberBaseball';
 
-const NumberBaseball = require('./NumberBaseball');
-
-ReactDOM.render(<NumberBaseball />, document.querySelector('#root'));
+ReactDom.render(<NumberBaseball />, document.querySelector('#root'));
