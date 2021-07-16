@@ -1,7 +1,13 @@
 import React, {Component} from 'react'; 
 import Try from './Try';
 function getNumbers(){ //숫자 네 개를 랜덤하게 뽑는 함수(중복 X)
-
+    const candidates = [1,2,3,4,5,6,7,8,9];
+    const array =[];
+    for(let i = 0; i < 4; i += 1){          //Math.floor는 소수점 이하를 버림한다
+        const chosen = candidates.splice(Math.floor(Math.random() * (9 - i)), 1)[0];
+        array.push(chosen);
+    }
+    return array;
 }
 
 class NumberBaseball extends Component{
@@ -12,16 +18,66 @@ class NumberBaseball extends Component{
         tries:[]
     };
 
-    onSubmitForm = () =>{
+    onSubmitForm = (e) =>{
+        e.preventDefault();
+
+        if( this.state.value === this.state.answer.join('')){ //join()은 배열의 원소를 결합해 하나의 문자열로 만들어준다
+            this.setState({
+                result:'홈런!',
+                tries:[...this.state.tries, {try:this.state.value, result:'홈런!'}]
+                //리액트에서 배열에 값을 넣을 때(변화 감지하길 원한다면) push를 사용할 수 없다
+                //리액트는 참조값이 변화해야 렌더링을 해주는데 단순히 arr.push(1) 이렇게 하면 감지하지 못한다
+                // 그래서 위처럼 const arr2 = [...arr, 2] 이렇게 기존의 배열을 복사해서 새 값과 넣어주어야 한다
+                // 단순히 push를 하면 arr이 빈 배열에서 1을 가진 배열로 바뀌어도 똑같다고 인식되지만
+                // 이렇게 복사해서 값을 다시 넣어주면 arr === arr2는 false이기 때문에 리액트가 감지해서 렌더링 해준다
+            });
+            alert('게임을 다시 시작합니다');
+                this.setState({
+                    value:'',
+                    answer: getNumbers(),
+                    tries:[]
+                });
+        } else{
+
+            const answerArray = this.state.value.split('').map((v) => parseInt(v));
+            let strike = 0;
+            let ball = 0;
+            if(this.state.tries.length >= 9){
+                this.setState({
+                    //result:'10번 넘게 틀려서 실패! 답은 ${this.state.answer.join(',')}였습니다!'
+                    result: '10번 넘게 틀려서 실패! 답은 '+this.state.answer.join(',')+'였습니다!'
+                });
+
+                alert('게임을 다시 시작합니다');
+                this.setState({
+                    value:'',
+                    answer: getNumbers(),
+                    tries:[]
+                });
+            } else{
+                for(let i = 0; i <4; i += 1){
+                    if(answerArray[i] === this.state.answer[i]){
+                        strike += 1;
+                    } else if(this.state.answer.includes(answerArray[i])){
+                        ball += 1;
+                    }
+                }
+
+                this.setState({
+                    tries: [...this.state.tries, {try: this.state.value, result:strike+' 스트라이크, '+ball+' 볼입니다'}]
+                })
+            }
+
+        }
 
     }
 
-    onChangeInput = () => {
-
+    onChangeInput = (e) => {
+        console.log(this.state.answer);
+        this.setState({
+            value:e.target.value
+        });
     }
-
-    fruits =['사과','바나나','포도','감','귤'];
-
     render(){
         return (
             <>
@@ -33,9 +89,9 @@ class NumberBaseball extends Component{
                </form>
                <div>차시 : {this.state.tries.length}</div>
                <ul> 
-                   {this.fruits.map((v, i)=>{ 
+                   {this.state.tries.map((v, i)=>{ 
                        return(
-                        <Try key={v} value={v} index={i}/> /*props로 부모자식관계가 형성된다 부모인 NumberBaseball이 자식 Try에게 props를 물려줌 */
+                        <Try key={(i+1)+'차 시도:'} tryInfo={v} index={i}/> /*props로 부모자식관계가 형성된다 부모인 NumberBaseball이 자식 Try에게 props를 물려줌 */
                        );
                    })};
                </ul>
