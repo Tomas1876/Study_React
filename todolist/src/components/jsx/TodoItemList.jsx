@@ -13,12 +13,18 @@ class TodoItemList extends React.Component{
     render(){
         const {todos, onToggle, onRemove} = this.props;
         
+        const todoList= todos.map((todos) => (
+            <TodoItem id={todos.id}
+                      content = {todos.content}
+                      isComplete = {todos.isComplete}
+                      onToggel={onToggle}
+                      onRemove={onRemove}
+                      key={todos.id} />
+        ));
 
         return(
             <div>
-                 <TodoItem content="TodoItem1" />
-                 <TodoItem content="TodoItem2" />
-                 <TodoItem content="TodoItem3" />
+                 {todoList}
             </div>
         );
     }
