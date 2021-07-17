@@ -1,7 +1,7 @@
 import React from 'react';
 import '../css/TodoList.css';
 
-const TotoList = ({form, children}) =>{
+const TodoList = ({form, children}) =>{
     return(
         <>
         <main className='todo-list-template'>

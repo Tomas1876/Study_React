@@ -1,12 +1,15 @@
 import React from 'react';
-import './App.css';
+import TodoList from './components/jsx/TodoList';
+import Form from './components/jsx/Form';
 
-function App() {
-  return (
-    <div>
-      <h1>TodoList!</h1>
-    </div>
-  );
+class App extends React.Component {
+  render() {
+      return (
+          <TodoList form={<Form />}>
+              오늘 할 일 템플릿입니다
+          </TodoList>
+      );
+  }
 }
 
 export default App;
