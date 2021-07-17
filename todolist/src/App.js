@@ -26,11 +26,12 @@ handleCreate =()=> {
     this.setState({
         input: "",
         todos: todos.concat({
-            id: this.id++,
+            id: this.state.id++,
             content: input,
             isComplete: false
         })
     });
+
 }
 
 handleKeyPress = (e) => {
@@ -38,6 +39,58 @@ handleKeyPress = (e) => {
         this.handleCreate();
     }
 }
+
+handleToggle = (id) =>{
+  const todos = this.state.todos;
+
+  const isComplete = todos.find(todos => todos.id === id).isComplete;
+  if(!window.confirm(isComplete ? "미완료 처리하시겠습니까?" : "완료처리 하시겠습니까?")){
+    return;
+  }
+
+  const i = todos.findIndex(todo => todo.id === id);
+
+  const selected = todos[i];
+
+  const nextTodos = [...todos];
+
+  nextTodos[i] = {...selected, isComplete: !selected.isComplete};
+
+  this.setState({
+    todos:nextTodos
+  });
+}
+handleRemove = (id) => {
+
+  const todos = this.state.todos;
+
+  const removeContent = todos.find(todos => todos.id === id).content;
+  if(!window.confirm("'" + removeContent + "' 을 삭제하시겠습니까?")) {
+      return;
+  }
+
+  this.setState({
+      todos : todos.filter(todo => todo.id !== id)
+  });
+}
+
+render() {
+  return (
+      <TodoList form={(
+          <Form
+              value={this.state.input}
+              onChange={this.handleChange}
+              onCreate={this.handleCreate}
+              onKeyPress={this.handleKeyPress} />
+      )}>
+          <TodoItemList
+              todos={this.state.todos}
+              onToggle={this.handleToggle}
+              onRemove={this.handleRemove} />
+      </TodoList>
+  );
+}
+
 
   render() {
       return (
@@ -48,7 +101,9 @@ handleKeyPress = (e) => {
               onCreate={this.handleCreate}
               onKeyPress={this.handleKeyPress}
           />}>
-              <TodoItemList todos ={this.state.todos}/>
+              <TodoItemList todos ={this.state.todos}
+                            onToggle={this.handleToggle}
+                            onRemove={this.handleRemove} />
           </TodoList>
       );
   }

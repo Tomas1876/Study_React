@@ -12,12 +12,12 @@ TodoItemList 컴포넌트는 TodoItem 컴포넌트 여러 개를 렌더링해주
 class TodoItemList extends React.Component{
     render(){
         const {todos, onToggle, onRemove} = this.props;
-        
+
         const todoList= todos.map((todos) => (
             <TodoItem id={todos.id}
                       content = {todos.content}
                       isComplete = {todos.isComplete}
-                      onToggel={onToggle}
+                      onToggle={onToggle}
                       onRemove={onRemove}
                       key={todos.id} />
         ));

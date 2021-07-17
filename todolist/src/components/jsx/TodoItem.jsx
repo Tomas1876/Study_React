@@ -16,20 +16,21 @@ class TodoItem extends React.Component{
 
         return(
             <div className='todo-item' onClick={ () => onToggle(id)}>
-                <div className='todo-item-remove' onClick={(e)=>{
-                    e.stopPropagation(); //이벤트 확산 막음 onToggle 실행 안 되게 함
-                    onRemove(id)}
-                }>
-                    items
-                </div>
+                {
+                    isComplete && (<div className="isComplete-mark">✓ </div>)
+                }
                 <div className={`todo-item-content ${isComplete && 'isComplete'}`}>
                     <div>
                         {content}
                     </div>
                 </div>
-                {
-                    isComplete && (<div className="isComplete-mark">✓</div>)
-                }
+                
+                <div className='todo-item-remove' onClick={(e)=>{
+                    e.stopPropagation(); //이벤트 확산 막음 onToggle 실행 안 되게 함
+                    onRemove(id)}
+                }>
+                    X
+                </div>
             </div>
         );
 
