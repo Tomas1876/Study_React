@@ -43,12 +43,12 @@ handleKeyPress = (e) => {
 handleToggle = (id) =>{
   const todos = this.state.todos;
 
-  const isComplete = todos.find(todos => todos.id === id).isComplete;
+  const isComplete = todos.find(todos => todos.id === id).isComplete; //() 안의 판별식을 만족하는 첫번째 요소를 반환
   if(!window.confirm(isComplete ? "미완료 처리하시겠습니까?" : "완료처리 하시겠습니까?")){
     return;
   }
 
-  const i = todos.findIndex(todo => todo.id === id);
+  const i = todos.findIndex(todos => todos.id === id); 
 
   const selected = todos[i];
 
