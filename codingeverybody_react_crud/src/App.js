@@ -3,6 +3,7 @@ import Subject from './components/Subject';
 import TOC from './components/TOC';
 import ReadContent from './components/ReadContent';
 import CreateContent from './components/CreateContent';
+import UpdateContent from './components/UpdateContent';
 import Control from './components/Control';
 import './App.css';
 
@@ -63,31 +64,59 @@ class App extends Component{
       contents:newContents //기존의 배열을 복사한 것을 리턴한 newContents에 push 했으니 원본은 그대로!
     })
   }
-  render(){
-    console.log('App render');
+
+  onSubmitUpdate = (_id, _title, _desc, _content) =>{
+
+    console.log(_id, _title, _desc);
+    var _contents = Array.from(this.state.contents);
+    var i = 0;
+    while(i < _contents.length){
+      if(_contents[i].id === _id){
+        _contents[i] = {id:_id, title:_title, desc:_desc};
+        break;
+      }
+      i = i + 1;
+    }
+    this.setState({
+      contents:_contents 
+    })
+
+  }
+  getReadContent = () =>{
+
+    var i =0;
+    while(i < this.state.contents.length){
+      var data = this.state.contents[i];
+      if(data.id === this.state.selected_content_id){
+        return data;
+        break;
+      }
+      i = i+1;
+    }
+
+  }
+  getContent =() =>{
     var _title, _desc, _article = null;
     if(this.state.mode === 'welcome'){
       _title = this.state.welcome.title;
       _desc = this.state.welcome.desc;
       _article = <ReadContent title={_title} desc={_desc}></ReadContent>
-    } else if(this.state.mode === 'read'){
 
-      var i =0;
-      while(i < this.state.contents.length){
-        var data = this.state.contents[i];
-        if(data.id === this.state.selected_content_id){
-          _title = data.title;
-          _desc = data.desc;
-          _article = <ReadContent title={_title} desc={_desc}></ReadContent>
-          break;
-        }
-        i = i+1;
-      }
+    } else if(this.state.mode === 'read'){      
+      var _content = this.getReadContent();
+      _article = <ReadContent title={ _content.title} desc={ _content.desc}></ReadContent>
       
     } else if(this.state.mode === 'create'){
         _article = <CreateContent onSubmit={this.onSubmitCreate}></CreateContent>
-        
+    } else if(this.state.mode === 'update'){
+      _content = this.getReadContent();
+      _article = <UpdateContent data={_content} onSubmit={this.onSubmitUpdate}></UpdateContent>  
     }
+    return _article;
+  }
+
+  render(){
+    console.log('App render');
     return(
       <div className="App">
         <Subject
@@ -97,7 +126,7 @@ class App extends Component{
         </Subject>
         <TOC onChangePage={this.onChangePage} data={this.state.contents}></TOC>
         <Control onChangeMode={this.onChangeMode}/>
-        {_article}
+        {this.getContent()}
       </div>
     );
   }
