@@ -10,11 +10,10 @@ class TOC extends Component{
         while( i < data.length){
             lists.push(<li key={data[i].id}>
                 <a href={"/content/" + data[i].id}
-                data-id={data[i].id}
+                data-id={data[i].id} //data-id는 이벤트 객체의 dataset이라는 속성을 이용해 접근할 수 있다
                 onClick={(e) => {
                     e.preventDefault();
-
-                    this.props.onChangePage(e.dataset.id)
+                    this.props.onChangePage(e.target.dataset.id, 'read');
                 }}>{data[i].title}</a>
             </li>);
             i = i+1;
