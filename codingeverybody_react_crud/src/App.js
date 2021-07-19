@@ -30,9 +30,39 @@ class App extends Component{
   }
 
   onChangeMode = (mode) => {
-    this.setState({
-      mode:mode
-    });
+
+    if(mode === 'delete'){
+
+      if(window.confirm('정말 삭제하시겠습니까?')){ //사용자가 예를 누르면 참이 된다
+        var _contents = Array.from(this.state.contents);
+        var i = 0
+        while(i < _contents.length){
+          if(_contents[i].id === this.state.selected_content_id){
+              _contents.splice(i, 1);
+              break;
+          }
+
+          i = i + 1;
+
+        }
+        this.setState({
+          mode:'welcome',
+          contents:_contents
+        });
+        alert('삭제되었습니다');
+
+      } else{
+
+      }
+
+    } else{
+
+      this.setState({
+        mode:mode
+      });
+
+    }
+
   }
 
   onSubmitCreate =(_title, _desc) =>{
