@@ -68,8 +68,7 @@ class App extends Component{
   onSubmitCreate =(_title, _desc) =>{
     console.log(_title, _desc);
     var max = this.state.max_id;
-    // var _contents = this.state.contents.concat({id:max + 1, title:_title, desc:_desc});
-    
+    // var _contents = this.state.contents.concat({id:max + 1, title:_title, desc:_desc});   
     // this.setState({
     //   contents:_contents,
     //   max_id:max +1
