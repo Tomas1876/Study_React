@@ -11,14 +11,12 @@ class UpdateContent extends Component{
             desc: this.props.data.desc
           }
     }
-
     onChangeValue = (e) =>{
         console.log(e.target.value);
         this.setState({
             [e.target.name]:e.target.value //e.target.name을 사용하면 이벤트 타겟의 name값이 들어오게 된다
         });
     }
-
     render(){
         console.log('UpdateContent render');
         console.log(this.props.data.title)
