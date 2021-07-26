@@ -26,7 +26,7 @@ class ResponseCheck extends Component {
                      onClick={this.onClickScreen}>
                     {message}
                 </div>
-                {this.renderAverage()}                
+                {this.renderAverage()}              
             </>
         );
     }
