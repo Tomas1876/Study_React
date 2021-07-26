@@ -71,7 +71,7 @@ const NumberBaseball = () => {
     }
 
     const onChangeInput = (e) => {
-        console.log(this.state.answer);
+        console.log(answer);
         setValue(e.target.value);
     }
 
@@ -89,7 +89,7 @@ const NumberBaseball = () => {
                        return(
                         <Try key={(i+1)+'차 시도:'} tryInfo={v} index={i}/> /*props로 부모자식관계가 형성된다 부모인 NumberBaseball이 자식 Try에게 props를 물려줌 */
                        );
-                   })};
+                   })}
                </ul>
             </>
     );
