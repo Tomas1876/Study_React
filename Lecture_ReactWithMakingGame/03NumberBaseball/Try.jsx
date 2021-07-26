@@ -1,8 +1,10 @@
 import React, {memo, useState} from 'react';
 
+
 //Hooks로 바꾸기
 //const Try = (props) => { 혹은 구조분해할당을 해서 아래처럼 할 수도 있다
 const Try = memo(({ tryInfo }) =>{
+
     //props는 부모가 바꿔야지 자식은 절대 바꿀 수 없다
     //하지만 실무를 하다 보면 바꿔야 하는 경우가 있는데 이때 props를 state 안에 넣어주고
     //그 state를 setState를 통해 바꿔준다
