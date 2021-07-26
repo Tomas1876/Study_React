@@ -32,6 +32,6 @@ class ResponseCheck extends Component {
     }
 }
 //jsx에서 false, null, undefined는 태그가 없다는 뜻
-//리액트 render 안에서 조건문은 삼항 연산자로 사용함
+//리액트 render 안에서 조건문은 삼항 연산자로 사용함 
 
 export default ResponseCheck;
