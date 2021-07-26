@@ -1,14 +1,14 @@
-import React, {Component} from 'react';
+import React from 'react';
 
-class Try extends Component{
-    render(){
-        return(
-            <li>
-                <div>{this.props.tryInfo.try}</div>
-                <div>{this.props.tryInfo.result}</div>
-            </li>
-        );
-    }
+//Hooks로 바꾸기
+//const Try = (props) => { 혹은 구조분해할당을 해서 아래처럼 할 수도 있다
+const Try = ({ tryInfo }) =>{
+    return(
+        <li>
+        <div>{tryInfo.try}</div>
+        <div>{tryInfo.result}</div>
+    </li>
+    )
 }
 
 export default Try;
