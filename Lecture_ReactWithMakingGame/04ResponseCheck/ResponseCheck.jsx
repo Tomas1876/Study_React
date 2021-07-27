@@ -8,7 +8,7 @@ class ResponseCheck extends Component {
         result :[]
     }
 
-    //setTimeout을 제어하기 위한 장치
+    //setTimeout을 제어하기 위한 장치 this.timeout을 생성하는 것
     timeout;
 
     startTime;
@@ -51,10 +51,19 @@ class ResponseCheck extends Component {
         }
 
     }
+    onReset = () =>{
+        this.setState({
+            result:[]
+        });
+    }
 
+    // 아래 태그 부분은 새 컴포넌트로 하고, result 등은 props로 물려주는 식으로 하는 것이 낫다
     renderAverage = () =>{
         const {result} = this.state;
-        return result.length === 0 ? null : <div>평균 시간 - {result.reduce((a, c) => a+c) / result.length}ms</div>
+        return result.length === 0 ? null : <>
+            <div>평균 시간 - {result.reduce((a, c) => a+c) / result.length}ms</div>
+            <button onClick={this.onReset}>취소</button>
+        </>
     }
 
     render(){
