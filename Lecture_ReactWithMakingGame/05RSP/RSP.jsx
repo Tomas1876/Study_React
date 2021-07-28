@@ -97,21 +97,21 @@ class RSP extends Component{
     //클릭이 일어났을 때만 렌더링이 일어나게 할 수는 없을까...
 
     //setState는 render 안에서 사용할 수 없다 무한 렌더링 지옥에 빠지니까...
-    render(){
-        const {result, score, imgCoord} = this.state;
+    render() {
+        const { result, score, imgCoord } = this.state;
         return (
-            <>
-                <div id="computer" style={{ background: `url(https://en.pimg.jp/023/182/267/1/23182267.jpg) ${imgCoord} 0` }} />
-                <div>
-                    <button id="rock" className="btn" onClick={ this.onClickBtn('바위')}>바위</button>
-                    <button id="scissor" className="btn" onClick={ this.onClickBtn('가위')}>가위</button>
-                    <button id="paper" className="btn" onClick={this.onClickBtn('보')}>보</button>
-                </div>
-                <div>{result}</div>
-                <div>현재 {score}점</div>
-            </>
+          <>
+            <div id="computer" style={{ background: `url(https://en.pimg.jp/023/182/267/1/23182267.jpg) ${imgCoord} 0` }} />
+            <div>
+              <button id="rock" className="btn" onClick={this.onClickBtn('바위')}>바위</button>
+              <button id="scissor" className="btn" onClick={this.onClickBtn('가위')}>가위</button>
+              <button id="paper" className="btn" onClick={this.onClickBtn('보')}>보</button>
+            </div>
+            <div>{result}</div>
+            <div>현재 {score}점</div>
+          </>
         );
-    }
+      }
 }
 
 export default RSP;
