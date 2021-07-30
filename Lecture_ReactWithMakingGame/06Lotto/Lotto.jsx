@@ -24,10 +24,6 @@ function getWinNumbers(){
 } 
 class Lotto extends Component{
 
-    onClickRedo =() =>{
-
-    }
-
     state={
         winNumbers:getWinNumbers(), //당첨 숫자들
         winBalls:[],
@@ -35,7 +31,8 @@ class Lotto extends Component{
         redo:false
     }
     timeouts = [];
-    componentDidMount(){
+    runTimeouts = ()=>{
+
         const {winNumbers} = this.state;
         for(let i =0; i< this.state.winNumbers.length - 1; i++){ 
             //변수 let을 사용하면 비동기에서 클로저 문제가 발생하지 않는다
@@ -54,12 +51,34 @@ class Lotto extends Component{
                 redo:true
             });
         }, 7000);
+
+    }
+    componentDidMount(){
+        this.runTimeouts()
+    }
+
+    componentDidUpdate(prevProps, prevState){
+        if(this.state.winBalls.length ===0){
+            this.runTimeouts();
+        }
     }
 
     componentWillUnmount(){
         this.timeouts.forEach((v) =>{
             clearTimeout(v);
         });
+    }
+
+    onClickRedo =() =>{ //한 번 더 할때 초기화 시켜주는 함수
+
+        this.setState({
+            winNumbers:getWinNumbers(),
+            winBalls:[],
+            bonus:null,
+            redo:false
+        });
+        this.timeouts = [];
+        
     }
 
     render(){
