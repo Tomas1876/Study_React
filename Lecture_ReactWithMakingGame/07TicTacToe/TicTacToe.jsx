@@ -87,6 +87,7 @@ const TicTacToe = () =>{
           } 
 
           if(win){ //승리시
+            dispatch({type:RESET_GAME}); 
             dispatch({type:SET_WINNER, winner:turn})
           } else{ //무승부
             //무승부 검사는 테이블이 다 찼는지를 확인해야 한다

@@ -1,7 +1,16 @@
-import React,{useCallback, useEffect, useRef} from 'react';
-import {CLICK_CELL, CHANGE_TURN} from "./TicTacToe";
+import React,{useCallback, useEffect, useRef, memo } from 'react';
+import {CLICK_CELL} from "./TicTacToe";
 
-const Td= ({rowIndex, cellIndex, cellData, dispatch})=>{
+const Td= memo(({rowData, rowIndex, cellIndex, cellData, dispatch})=>{
+
+    const ref = useRef([]);
+useEffect(()=>{
+    ref.current = [rowData,cellIndex,dispatch,cellData];
+    console.log(cellData)
+    console.log(rowData===ref.current[0],cellIndex===ref.current[1],dispatch===ref.current[2],cellData===ref.current[3])
+    //찍어봤을 때 값이 false면 바뀐 것
+
+},[rowIndex,cellIndex,dispatch,cellData]);
     console.log("td render")
     const onClickTd = useCallback(() =>{
         console.log(rowIndex, cellIndex)
@@ -14,6 +23,6 @@ const Td= ({rowIndex, cellIndex, cellData, dispatch})=>{
     return (
        <td onClick={onClickTd}>{cellData}</td>
     );
-};
+});
 
 export default Td;
