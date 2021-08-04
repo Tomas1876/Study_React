@@ -1,25 +1,25 @@
 import React, {useState, useCallback, useContext} from 'react'; //useContext는 ContextAPI를 이용해 값을 가져오기 위해 사용
-import {TableContext} from "./MineSearch";
+import { START_GAME, TableContext } from './MineSearch';
 
 const Form = () =>{
-    const [row, setRow] = useState(10); //세로
-    const [cell, setCell] = useState(10); //가로
-    const [mine, setMine] = useState(20); //지뢰
-    const {dispatch} = useContext(TableContext)
+    const [row, setRow] = useState(10);
+    const [cell, setCell] = useState(10);
+    const [mine, setMine] = useState(20);
+    const { dispatch } = useContext(TableContext);
     
-    onChangeRow = useCallback((e)=>{
+    const onChangeRow = useCallback((e)=>{
         setRow(e.target.value);
     },[]);
-    onChangeCell = useCallback((e)=>{
+    const onChangeCell = useCallback((e)=>{
         setCell(e.target.value);
     },[]);
-    onChangeMine = useCallback((e)=>{
+    const onChangeMine = useCallback((e)=>{
         setMine(e.target.value);
     },[]);
 
-    onClickBtn= useCallback(()=>{
-        dispatch({type:START_GAME, row, cell, mine});
-    },[row, cell, mine]);
+    const onClickBtn = useCallback(() => {
+        dispatch({ type: START_GAME, row, cell, mine });
+    }, [row, cell, mine]);
 
     return(
         <div>
