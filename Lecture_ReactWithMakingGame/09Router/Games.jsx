@@ -1,8 +1,6 @@
 import React from 'react'; 
 import {BrowserRouter, HashRouter, Route, Link} from 'react-router-dom';
-import NumberBaseball from "../03NumberBaseball/NumberBaseballClass";
-import RSP from "../05RSP/RSP"; //RSP와 Lotto는 class형이 이미 있음
-import Lotto from "../06Lotto/Lotto";
+import GameMatcher from "./GameMatcher"
 
 const Games = () => {
 
@@ -11,16 +9,16 @@ const Games = () => {
         <BrowserRouter>
           <div>
             공통인 부분<br />
-            <Link to="/number-baseball" >숫자야구</Link>
+            <Link to="/game/number-baseball" >숫자야구</Link>
             <br />
-            <Link to="/rock-scissors-paper">가위바위보</Link>
+            <Link to="/game/rock-scissors-paper">가위바위보</Link>
             <br />
-            <Link to="/lotto-generator" >로또 추첨</Link>
+            <Link to="/game/lotto-generator" >로또 추첨</Link>
+            <br />
+            <Link to="/game/index" >GameMatcher</Link>
           </div>
           <div>
-            <Route path="/number-baseball" component={NumberBaseball}/>
-            <Route path="/rock-scissors-paper" component={RSP} />
-            <Route path="/lotto-generator" component={Lotto}/>
+            <Route path="/game/:name" component={GameMatcher} />
           </div>
         </BrowserRouter>
     );
@@ -30,6 +28,12 @@ const Games = () => {
 
     //페이지가 여러 개인 척 하는 것이고, 실제는 한 페이지이기 때문에
     //진짜로 페이지 이동하는 a태그를 사용하면 에러가 발생한다
+
+    //해쉬라우터는 새로고침해도 페이지가 동작한다
+    //주소창에서 # 뒤에 붙는 부분은 브라우저만 알고 있으면 되는 부분이기 때문
+    //하지만 브라우저라우터도 wepackconfig에 코드를 추가하면 새로고침을 이용할 수 있다
+    //해쉬라우터를 사용하면 검색엔진에서 뜨지 않는다 그래서 실무에서 잘 안 씀
+    //(검색엔진은 서버에 물어봐서 페이지를 확인한다)
 
 };
 
