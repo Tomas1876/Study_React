@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+   <!--
+    ** 순수 redux **
+        1. 리덕스의 핵심은 Store
+        2. Store는 정보가 저장되는 곳(은행)
+        3. Store 안에는 state라는 실제 정보가 저장된다(state = 은행의 돈)
+            - state는 절대 직접 접속이 불가하다. 누군가를 통해야한다.
+        4. Store에 접근 하기 전에, 일종의 창구 직원 역할하는 함수(dispatch, subscribe, getState).
+        5. render는 getState를 통해 satate 값을 참조해서 ui를 작성
+        6. state의 값이 바뀔 때마다 알아서 render함수가 실행되도록 하는 것이 subscribe
+        7. 사용자가 행동을 취하면(submit을 누른다든지) action이 dispatch에게 전달된다
+        8. dispatch는 현재의 state 값과 action data 두 개의 값을 reducer에게 전달한다
+        9. reducer는 state값을 받고 action을 참조해서 새로운 state 값을 리턴하는 함수
+        10. state 값이 변경되었으니 disaptch가 subcribe를 호출하고 따라서 render가 실행되며 화면이 바뀐다.
+
+        --이것이 redux의 기본적인 프로세스.
+   --> 
+</body>
+</html>

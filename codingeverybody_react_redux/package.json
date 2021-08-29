@@ -1,5 +1,5 @@
 {
-  "name": "learn-redux-middleware",
+  "name": "codingeverybody_react_redux",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -11,8 +11,6 @@
     "react-redux": "^7.2.4",
     "react-scripts": "4.0.3",
     "redux": "^4.1.1",
-    "redux-actions": "^2.6.5",
-    "redux-logger": "^3.0.6",
     "web-vitals": "^1.0.1"
   },
   "scripts": {
