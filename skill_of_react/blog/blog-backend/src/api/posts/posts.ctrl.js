@@ -5,7 +5,7 @@ import Joi from 'joi'; //Request Body 검증을 위한
 const { ObjectId } = mongoose.Types;
 
 //ObjectId 검증
-export const checkObjectId = (ctx, next) => {
+export const checkOgetbjectId = (ctx, next) => {
   const { id } = ctx.params;
   if (!ObjectId.isValid(id)) {
     ctx.status = 400; // Bad Request
@@ -45,6 +45,7 @@ export const write = async ctx => {
     title,
     body,
     tags,
+    user:ctx.state.user
   });
   try {
     await post.save();

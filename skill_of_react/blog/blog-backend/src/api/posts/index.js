@@ -1,15 +1,16 @@
 import Router from 'koa-router';
 import * as postsCtrl from './posts.ctrl';
+import checkLoggedIn from '../../lib/checkLoggedIn';
 
 const posts = new Router();
 
 posts.get('/', postsCtrl.list);
-posts.post('/', postsCtrl.write);
+posts.post('/', checkLoggedIn, postsCtrl.write); //이제 checkLoggedIn이 실행되고 그 다음에 다음라우터가 실행된다
 
 const post = new Router(); // /api/posts/:id
 post.get('/', postsCtrl.read);
-post.delete('/', postsCtrl.remove);
-post.patch('/', postsCtrl.update);
+post.delete('/',checkLoggedIn, postsCtrl.remove);
+post.patch('/', checkLoggedIn, postsCtrl.update);
 /*
 //아이디 검증이 필요하므로 chekObjectId 미들웨어 추가
 post.get('/:id',postsCtrl.checkObjectId, postsCtrl.read)
