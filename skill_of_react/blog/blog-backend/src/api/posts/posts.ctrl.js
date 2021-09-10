@@ -5,14 +5,36 @@ import Joi from 'joi'; //Request Body 검증을 위한
 const { ObjectId } = mongoose.Types;
 
 //ObjectId 검증
-export const checkOgetbjectId = (ctx, next) => {
+// export const checkOgetbjectId = (ctx, next) => {
+//   const { id } = ctx.params;
+//   if (!ObjectId.isValid(id)) {
+//     ctx.status = 400; // Bad Request
+//     return;
+//   }
+//   return next();
+// };
+export const getPostById = (ctx, next) => {
   const { id } = ctx.params;
   if (!ObjectId.isValid(id)) {
     ctx.status = 400; // Bad Request
     return;
   }
+  try{
+    const post = await Post.findById(id);
+
+    //포스트가 존재하지 않을 때
+    if(!post){
+      ctx.status = 404;
+      return;
+    }
+    ctx.state.post = post;
+    return next();
+  }catch(e){
+    ctx.throw(500,e)
+  }
   return next();
 };
+
 
 /*
   POST /api/posts
@@ -95,21 +117,23 @@ export const list = async ctx => {
   }
 };
 
+//사용자의 포스트가 아니면 403 리턴
+export const checkOwnPost=(ctx, next)=>{
+  const {user, post} = ctx.state;
+
+  //MongoDB에서 조회한 데이터의 id값을 문자열과 비교할 때는 반드시 toString()을 해주어야 한다
+  if(post.user._id.toString() !== user._id){ 
+    ctx.status = 403;
+    return;
+  }
+  return next();
+}
+
 /*
   GET /api/posts/:id
 */
 export const read = async ctx => {
-  const { id } = ctx.params;
-  try {
-    const post = await Post.findById(id).exec();
-    if (!post) {
-      ctx.status = 404; // Not Found
-      return;
-    }
-    ctx.body = post;
-  } catch (e) {
-    ctx.throw(500, e);
-  }
+  ctx.body = ctx.state.post;
 };
 
 /*
