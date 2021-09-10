@@ -38,6 +38,13 @@ export const register = async ctx =>{
 
         //응답할 데이터에서 hashedPassword 필드 제거
         ctx.body = user.serialize();
+
+        //토큰
+        const token = user.generateToken();
+        ctx.cookies.set('access_token', token, {
+            maxAge:1000*60*60*24*7, //7일
+            httpOnly:true //공격 막기 위한 설정
+        });
         
     } catch(e){
         ctx.throw(500, e)
@@ -69,14 +76,28 @@ export const login = async ctx =>{
         }
 
         ctx.body = user.serialize();
+
+        //토큰
+        const token = user.generateToken();
+        ctx.cookies.set('access_token', token, {
+            maxAge:1000*60*60*24*7,
+            httpOnly:true
+        });
+
     } catch(e) {
         ctx.throw(500,e)
     }
 }
 //로그인 상태 확인
-export const check = async ctx =>{
-
-}
+export const check = async ctx => {
+    const { user } = ctx.state;
+    if (!user) {
+      // 로그인중 아님
+      ctx.status = 401; // Unauthorized
+      return;
+    }
+    ctx.body = user;
+  };
 //로그아웃
 export const logout = async ctx =>{
 
